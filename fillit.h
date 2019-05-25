@@ -6,7 +6,7 @@
 /*   By: mirivera <mirivera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 13:10:02 by mirivera          #+#    #+#             */
-/*   Updated: 2019/05/18 00:14:31 by mirivera         ###   ########.fr       */
+/*   Updated: 2019/05/24 17:11:54 by brfeltz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # define USAGE ft_putstr("usage: fillit input_file\n")
 # define ERROR {ft_putstr("error\n"); exit(0);}
+# define MVDWNROW {i++; j = 0;}
 
 # include <stdlib.h>
 # include <string.h>
@@ -42,19 +43,39 @@ char	**piece_check(char **str);
 */
 
 void	convert_to_char(char *str, char c);
-char	**builder(int g_size);
-void	pickup(char **board, char c);
-void	print_board(char **board, int size);
-void	free_board(char **grid, int size);
+// char	**builder(int g_size);
+// void	print_board(char **board, int size);
 
 /*
 ** Solve
 */
 
 int		nlmove(char *str, char **board);
-int		place(char *piece, char **board, int j);
-void	pickup(char **board, char c);
-int		solve(char **board, char **pieces);
-int		backtrack(char **board, char **pieces, char c);
+// int		place(char *piece, char **board, int j, int c);
+// void	    pickup(char **board, char c);
+// int		solve(char **board, char **pieces);
+// int		backtrack(char **board, char **pieces, char c);
+
+/*
+** Version3, back to single string board attempt!
+*/
+
+void	print_board(char *board);
+char	*builder(int g_size);
+
+int		solve(char *board, char **pieces);
+int		backtrack(char *board, char **pieces, char letter);
+int		place(char *piece, char *board, int charcount);
+int     pickup(char *board, char c);
+
+
+
+
+
+
+
+
+
+
 
 #endif
