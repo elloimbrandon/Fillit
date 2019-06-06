@@ -3,34 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirivera <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: brfeltz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/20 18:20:09 by mirivera          #+#    #+#             */
-/*   Updated: 2019/02/28 09:43:47 by mirivera         ###   ########.fr       */
+/*   Created: 2019/02/26 21:28:05 by brfeltz           #+#    #+#             */
+/*   Updated: 2019/02/26 21:53:29 by brfeltz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** The strrchr() function is identical to strchr(), except it locates
-** the last occurrence of c. Starts searching from the left.
-*/
-
-char	*ft_strrchr(const char *s, int c)
+char	*ft_strrchr(const char *s, int n)
 {
-	char	*lastoccur;
+	size_t len;
 
-	lastoccur = (0);
-	while (*s)
-	{
-		if (*s == c)
-			lastoccur = (char *)s;
-		++s;
-	}
-	if (lastoccur)
-		return (lastoccur);
-	if (c == '\0')
-		return ((char *)s);
+	len = ft_strlen(s);
+	while (len > 0 && s[len] != n)
+		len--;
+	if (s[len] == n)
+		return (&((char*)s)[len]);
 	return (NULL);
 }

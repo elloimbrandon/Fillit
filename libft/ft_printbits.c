@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_printbits.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brfeltz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/29 20:08:15 by brfeltz           #+#    #+#             */
-/*   Updated: 2019/03/01 14:27:46 by brfeltz          ###   ########.fr       */
+/*   Created: 2019/03/16 13:54:14 by brfeltz           #+#    #+#             */
+/*   Updated: 2019/03/16 14:01:29 by brfeltz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_strcmp(const char *s1, const char *s2)
+void	ft_printbits(unsigned char octet)
 {
-	while (*s1 && *s2 && *s1 == *s2)
+	int				i;
+	unsigned char	bit;
+
+	i = 8;
+	while (i--)
 	{
-		s1++;
-		s2++;
+		bit = (octet >> i & 1) + '0';
+		write(1, &bit, 1);
 	}
-	return (*(unsigned char*)s1) - *((unsigned char*)s2);
 }

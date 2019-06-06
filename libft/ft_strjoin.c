@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirivera <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: brfeltz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/26 17:11:52 by mirivera          #+#    #+#             */
-/*   Updated: 2019/04/08 21:09:12 by mirivera         ###   ########.fr       */
+/*   Created: 2019/02/26 20:16:11 by brfeltz           #+#    #+#             */
+/*   Updated: 2019/03/02 14:36:27 by brfeltz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-/*
-** Allocate memory for result using both or one string(s),
-** since you'll be joining them in that string.
-** Copy string1 into the new string if there's only one,
-** same with the second string
-** and then strcat the two or one strings together
-** to fill in the rest of result's array, then return result.
-*/
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

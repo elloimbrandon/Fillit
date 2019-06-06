@@ -3,28 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirivera <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: brfeltz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/20 14:06:57 by mirivera          #+#    #+#             */
-/*   Updated: 2019/02/28 09:39:47 by mirivera         ###   ########.fr       */
+/*   Created: 2019/02/26 21:05:22 by brfeltz           #+#    #+#             */
+/*   Updated: 2019/03/01 12:25:10 by brfeltz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Finds the first character 'c' in string s
-*/
-
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr(char const *s, int n)
 {
 	while (*s)
 	{
-		if (*s == c)
-			return ((char *)s);
-		++s;
+		if (*s == n)
+			return ((char*)s);
+		s++;
 	}
-	if (c == '\0')
-		return ((char *)s);
+	if (!n)
+		return ((char*)s);
 	return (NULL);
 }

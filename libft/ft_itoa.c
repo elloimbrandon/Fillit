@@ -3,48 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirivera <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: brfeltz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/28 21:17:42 by mirivera          #+#    #+#             */
-/*   Updated: 2019/02/28 21:41:11 by mirivera         ###   ########.fr       */
+/*   Created: 2019/02/14 16:36:29 by brfeltz           #+#    #+#             */
+/*   Updated: 2019/03/05 17:27:33 by brfeltz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** If the first expression returns TRUE then the expression
-** on the left is executed. If FALSE, the expression on the
-** right is returned.
-**
-** Line 30 determines # of places in the string
-*/
-
-char	*ft_itoa(int n)
+static size_t	ft_instrlen(int n)
 {
-	int		length;
-	int		sign;
-	char	*str;
+	size_t	i;
 
+	i = 1;
+	while (n /= 10)
+		i++;
+	return (i);
+}
+
+char			*ft_itoa(int n)
+{
+	char			*str;
+	size_t			len;
+	unsigned int	sign;
+
+	len = ft_instrlen(n);
 	sign = n;
-	length = 1;
-	while (sign /= 10)
-		length++;
-	sign = n < 0 ? 1 : 0;
-	length = n < 0 ? length += 1 : length;
-	if (n == -2147483648)
-		return (str = ft_strdup("-2147483648"));
-	str = ft_strnew(length);
+	if (n < 0)
+	{
+		sign = -n;
+		len++;
+	}
+	str = (char*)malloc(sizeof(char) * len);
 	if (!str)
 		return (NULL);
-	if (sign)
+	str[len] = '\0';
+	str[--len] = sign % 10 + '0';
+	while (sign /= 10)
+		str[--len] = sign % 10 + '0';
+	if (n < 0)
 		str[0] = '-';
-	n = n < 0 ? n *= -1 : n;
-	while (--length >= sign)
-	{
-		str[length] = (n >= 10) ? (n % 10) + 48 : n + 48;
-		n /= 10;
-	}
-	str[ft_strlen(str)] = '\0';
 	return (str);
 }

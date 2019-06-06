@@ -3,40 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirivera <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: brfeltz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/28 09:50:34 by mirivera          #+#    #+#             */
-/*   Updated: 2019/03/03 19:53:41 by mirivera         ###   ########.fr       */
+/*   Created: 2019/02/22 16:14:30 by brfeltz           #+#    #+#             */
+/*   Updated: 2019/03/02 14:26:41 by brfeltz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** In protected functions, order matters, so you need to check if
-** theres even strings and then return NULL if malloc doesnt return
-** a string. Check your mallocs, check your frees.
-*/
-
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+char	*ft_strmapi(char const *s, char (*f) (unsigned int, char))
 {
-	unsigned int	i;
-	char			*fresh;
+	char	*dest;
+	int		i;
 
+	i = 0;
 	if (!s || !f)
 		return (NULL);
-	if (!(fresh = ft_memalloc((size_t)ft_strlen((char *)s) + 1)))
-		return (NULL);
-	i = 0;
-	if (fresh)
+	dest = (char *)malloc((ft_strlen(s) + 1) * sizeof(char));
+	if (dest)
 	{
 		while (s[i])
 		{
-			fresh[i] = (f)(i, s[i]);
+			dest[i] = f(i, s[i]);
 			i++;
 		}
-		fresh[i] = '\0';
-		return (fresh);
+		dest[i] = '\0';
+		return (dest);
 	}
 	return (NULL);
 }

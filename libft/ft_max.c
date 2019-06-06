@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_max.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brfeltz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/29 20:08:15 by brfeltz           #+#    #+#             */
-/*   Updated: 2019/03/01 14:27:46 by brfeltz          ###   ########.fr       */
+/*   Created: 2019/03/16 14:06:20 by brfeltz           #+#    #+#             */
+/*   Updated: 2019/03/16 14:11:26 by brfeltz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_strcmp(const char *s1, const char *s2)
+int		ft_max(int *tab, unsigned int length)
 {
-	while (*s1 && *s2 && *s1 == *s2)
+	unsigned int	i;
+	int				max;
+
+	i = 0;
+	max = tab[i];
+	if (!tab)
+		return (0);
+	while (i < length)
 	{
-		s1++;
-		s2++;
+		if (tab[i] > max)
+		{
+			max = tab[i];
+			i = 0;
+		}
+		i++;
 	}
-	return (*(unsigned char*)s1) - *((unsigned char*)s2);
+	return (max);
 }

@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirivera <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: brfeltz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/04 19:28:34 by mirivera          #+#    #+#             */
-/*   Updated: 2019/03/04 19:39:30 by mirivera         ###   ########.fr       */
+/*   Created: 2019/02/28 17:50:10 by brfeltz           #+#    #+#             */
+/*   Updated: 2019/02/28 18:32:34 by brfeltz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-/*
-** Applies function (f) to each element of *lst
-** iterating through each car until the end
-*/
 
 void	ft_lstiter(t_list *lst, void (*f)(t_list *elem))
 {
@@ -23,7 +18,7 @@ void	ft_lstiter(t_list *lst, void (*f)(t_list *elem))
 		return ;
 	while (lst)
 	{
-		(f)(lst);
+		f(lst);
 		lst = lst->next;
 	}
 }

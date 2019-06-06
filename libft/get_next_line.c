@@ -3,88 +3,67 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirivera <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: brfeltz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/08 19:25:53 by mirivera          #+#    #+#             */
-/*   Updated: 2019/04/17 13:25:17 by mirivera         ###   ########.fr       */
+/*   Created: 2019/03/22 16:07:14 by brfeltz           #+#    #+#             */
+/*   Updated: 2019/04/08 16:23:26 by brfeltz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
-/*
-** ft_strsub is to create a new substring from the string passed
-** into it from the static array. The array starts at 0
-** and the length stops before the null terminator or the newline chars
-**
-** We are returning a line to the 2D array that will be printed
-*/
-
-static char		*line_to_print(char *str)
+int		get_line(char **temp, int fd, char **line)
 {
-	int		i;
-	char	*line_to_print;
+	char	*str;
+	char	*tempmem;
 
-	i = 0;
-	while (str && str[i] != '\0' && str[i] != '\n')
+	if ((str = ft_strchr(temp[fd], '\n')))
 	{
-		if (str[i] == '\n')
-			break ;
-		i++;
+		tempmem = temp[fd];
+		*str = '\0';
+		*line = ft_strndup(temp[fd], str - temp[fd]);
+		temp[fd] = ft_strdup(str + 1);
+		free(tempmem);
+		return (1);
 	}
-	line_to_print = ft_strsub(str, 0, i);
-	return (line_to_print);
+	else if (*temp[fd])
+	{
+		*line = ft_strdup(temp[fd]);
+		temp[fd] = ft_strnew(BUFF_SIZE + 1);
+		return (1);
+	}
+	return (0);
 }
 
-/*
-** using ft_strchr, I find the first occurence of newline chars
-** + 1 (going to the next char in the new line) to return the next
-** string to read through for more lines
-**
-** I'm eliminating new line chars and terminating strings.
-*/
-
-char			*new_str(char *str, char *new_str)
+int		ft_read(int fd, char **buffer)
 {
-	if (str && (ft_strchr(str, '\n')))
+	char	*temp;
+	char	*leak;
+	int		result;
+
+	temp = ft_strnew(BUFF_SIZE);
+	while ((result = read(fd, temp, BUFF_SIZE)) > 0)
 	{
-		new_str = ft_strchr(str, '\n') + 1;
-		new_str = ft_strdup(new_str);
-		free(str);
-		str = new_str;
+		leak = buffer[fd];
+		buffer[fd] = ft_strjoin(buffer[fd], temp);
+		if (!buffer[fd])
+			buffer[fd] = ft_strdup(temp);
+		free(leak);
+		ft_bzero(temp, BUFF_SIZE);
 	}
-	else if (str && (ft_strchr(str, '\0')))
-	{
-		new_str = ft_strchr(str, '\0');
-		new_str = ft_strdup(new_str);
-		free(str);
-		str = new_str;
-	}
-	return (new_str);
+	free(temp);
+	return (result);
 }
 
-int				get_next_line(const int fd, char **line)
+int		get_next_line(const int fd, char **line)
 {
-	static char		*temp[4864];
-	char			buffer[BUFF_SIZE + 1];
-	char			*tempmem;
-	int				readresult;
+	static char *temp[4864];
 
-	if (fd < 0 || line == NULL || fd >= 4864 || read(fd, buffer, 0) < 0)
+	if (!line || fd < 0 || BUFF_SIZE < 0)
 		return (-1);
-	while ((readresult = read(fd, buffer, BUFF_SIZE)) > 0)
-	{
-		if (!temp[fd])
-			temp[fd] = ft_strnew(BUFF_SIZE);
-		buffer[readresult] = '\0';
-		tempmem = ft_strjoin(temp[fd], buffer);
-		free(temp[fd]);
-		temp[fd] = tempmem;
-		ft_bzero(buffer, BUFF_SIZE);
-	}
-	if (temp[fd] && *temp[fd] == '\0')
-		return (readresult);
-	*line = line_to_print(temp[fd]);
-	temp[fd] = new_str(temp[fd], tempmem);
-	return (1);
+	if (ft_read(fd, &temp[fd]) < 0)
+		return (-1);
+	if (get_line(&temp[fd], fd, line) == 1)
+		return (1);
+	return (0);
 }

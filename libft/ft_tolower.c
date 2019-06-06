@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tolower.c                                       :+:      :+:    :+:   */
+/*   tolower.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirivera <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: brfeltz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/20 15:56:02 by mirivera          #+#    #+#             */
-/*   Updated: 2019/02/28 09:45:27 by mirivera         ###   ########.fr       */
+/*   Created: 2019/02/13 20:44:18 by brfeltz           #+#    #+#             */
+/*   Updated: 2019/02/26 15:28:17 by brfeltz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** If Condition is true ? then value X : otherwise value Y
-*/
-
 int		ft_tolower(int c)
 {
-	return (c >= 'A' && c <= 'Z' ? c + 32 : c);
+	if (c >= 'A' && c <= 'Z')
+		c = c + 32;
+	return (c);
 }

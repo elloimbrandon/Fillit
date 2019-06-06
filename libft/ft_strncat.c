@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirivera <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: brfeltz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/20 17:47:57 by mirivera          #+#    #+#             */
-/*   Updated: 2019/02/28 09:42:18 by mirivera         ###   ########.fr       */
+/*   Created: 2019/02/15 12:14:00 by brfeltz           #+#    #+#             */
+/*   Updated: 2019/03/04 18:48:07 by brfeltz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-/*
-** The strncat() function appends not more than n characters from s2,
-** and then adds a terminating `\0'.
-*/
 
 char		*ft_strncat(char *dest, const char *src, size_t n)
 {
@@ -23,14 +18,12 @@ char		*ft_strncat(char *dest, const char *src, size_t n)
 	size_t	j;
 
 	i = 0;
-	while (dest[i] != '\0')
+	while (dest[i])
 		i++;
 	j = 0;
-	while (src[j] != '\0' && j < n)
+	while (src[j] && j < n)
 	{
-		dest[i] = src[j];
-		i++;
-		j++;
+		dest[i++] = src[j++];
 	}
 	dest[i] = '\0';
 	return (dest);

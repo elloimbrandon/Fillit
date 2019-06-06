@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirivera <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: brfeltz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/20 14:46:40 by mirivera          #+#    #+#             */
-/*   Updated: 2019/02/28 14:54:16 by mirivera         ###   ########.fr       */
+/*   Created: 2018/10/29 11:54:21 by brfeltz           #+#    #+#             */
+/*   Updated: 2019/03/11 17:29:46 by brfeltz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,28 @@
 
 int		ft_atoi(const char *str)
 {
-	unsigned int i;
-	unsigned int nbr;
-	unsigned int sign;
+	int		i;
+	int		nbr;
+	int		neg;
 
 	i = 0;
 	nbr = 0;
-	sign = 1;
-	if (str[i] == '\0')
-		return (0);
-	while (str[i] == '\t' || str[i] == '\v' || str[i] == '\f' ||
-			str[i] == '\r' || str[i] == ' ' || str[i] == '\n')
+	neg = 0;
+	while (str[i] == '\n' || str[i] == '\t' || (str[i] == '\v') ||
+			(str[i] == ' ') || (str[i] == '\r') || (str[i] == '\f'))
 		i++;
-	if (str[i] == '-' || str[i] == '+')
-		if (str[i++] == '-')
-			sign = -1;
-	while (str[i] >= '0' && str[i] <= '9')
-		nbr = (nbr * 10) + (str[i++] - '0');
-	return (nbr * sign);
+	if (str[i] == '-')
+		neg = 1;
+	if (str[i] == '+' || str[i] == '-')
+		i++;
+	while (str[i] && str[i] >= '0' && str[i] <= '9')
+	{
+		nbr *= 10;
+		nbr += str[i] - '0';
+		i++;
+	}
+	if (neg == 1)
+		return (-nbr);
+	else
+		return (nbr);
 }

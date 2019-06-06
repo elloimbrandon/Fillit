@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_toupper.c                                       :+:      :+:    :+:   */
+/*   toupper.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirivera <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: brfeltz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/20 15:52:47 by mirivera          #+#    #+#             */
-/*   Updated: 2019/02/28 09:45:41 by mirivera         ###   ########.fr       */
+/*   Created: 2019/02/13 20:15:19 by brfeltz           #+#    #+#             */
+/*   Updated: 2019/02/26 15:28:38 by brfeltz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** If Condition is true ? then value X : otherwise value Y
-*/
-
 int		ft_toupper(int c)
 {
-	return (c >= 'a' && c <= 'z' ? c - 32 : c);
+	if (c >= 'a' && c <= 'z')
+		c = c - 32;
+	return (c);
 }

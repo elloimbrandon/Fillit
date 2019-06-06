@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirivera <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: brfeltz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/31 10:06:23 by mirivera          #+#    #+#             */
-/*   Updated: 2019/04/24 18:32:42 by mirivera         ###   ########.fr       */
+/*   Created: 2019/02/14 15:42:30 by brfeltz           #+#    #+#             */
+/*   Updated: 2019/05/02 19:51:14 by brfeltz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,4 +16,3 @@ void	ft_putstr(const char *str)
 {
 	write(1, str, ft_strlen((char *)str));
 }
-

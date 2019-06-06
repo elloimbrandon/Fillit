@@ -5,105 +5,129 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mirivera <mirivera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/17 10:30:12 by mirivera          #+#    #+#             */
-/*   Updated: 2019/05/16 21:05:24 by mirivera         ###   ########.fr       */
+/*   Created: 2019/05/30 10:54:00 by mirivera          #+#    #+#             */
+/*   Updated: 2019/06/03 20:03:07 by mirivera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include <stdio.h> //Don't forget to remove!!!!
 
 /*
-** If the number of parameters sent to your executable is not 1,
-** your program must display its usage and exit properly ✓
+** The string that was created after reading
+** the file is cut into it's own string and
+** placed into a 2D array via ft_strncpy.
+** Checkchars and checksides is called here
+** since this is the first time
+** we separate the long string into each piece.
+** These functions will return an error message
+** if either one of them returns a zero (0).
+** Our g_size variable counts the number
+** of pieces placed into the array and then uses that
+** to determine the size of the board.
+** Then there is another error check making sure
+** there are at least 20 chars left in the given string
+** we're dereferencing with *oldstr. If not,
+** we break out of the while loop and create a NULL string
+** to terminate the 2D (dest) array.
 */
 
-// This function is just getting the whole string
-char *textarray(char *txt)
+char	**ft_separate(char *str, char letter)
 {
-	int fd;
-	char buf; // where we store the strings we've read into for further process
-	char *dest; // the returned string we've read
-	int x; // our incrememtor through the whole string
+	char	**dest;
+	char	*oldstr;
 
-	x = 0;
-	fd = open(txt, O_RDONLY); // opening the file arg,argv *file name we make*
-	while (read(fd, &buf, 1)) // read into file and get the size of the whole string
-		x++;
-	if (x < 20 || x > 545) // if we get less than 20 chars then we know its not a valid piece, if we get more than 545, then we know there's more than 26 tetriminos
-		ERROR;
-	dest = ft_strnew(x); // allocate space for our new strin | at the size of x(strlen)
-	close(fd); // close fd as we are not using for this portion anymore
-	x = 0; // set x to 0 again to place the string into dest 1 by 1
-	fd = open(txt, O_RDONLY);
-	while (read(fd, &buf, 1))
-		dest[x++] = buf; /// while reading agian place every piece intp buff
-	close(fd); // final close
-	return (dest); // return whole string in file.txt
-}
-
-// function to seperate every 21 chars into a 2d array
-char **ft_separate(char *str, int *size) 
-{
-	char **dest; // creating our new 2d array
-	char *oldstr;
-	int i;
-	
-	i = 0;
 	oldstr = str;
-	dest = (char**)malloc(sizeof(char*) * 27); // allocating space for 2d array, limiting to 27
-	while (*oldstr)
+	dest = (char**)malloc(sizeof(char*) * 27);
+	while (*oldstr != '\0')
 	{
-		dest[i] = ft_strnew(21); // creating a new string of 21 bytes in each index
-		ft_strncpy(dest[i], oldstr, 21); // copy at every 21 pieces to new index
-		i++;
-		oldstr += 21; // adding 21 to old string to skip the 21 we alread had
-		if (ft_strlen(oldstr) < 20) //this was for the garbage value tetriminos being printed
+		dest[g_size] = ft_strnew(21);
+		ft_strncpy(dest[g_size], oldstr, 21);
+		if (!checkchars(str, 0, 0, 0) || !checksides(dest[g_size], letter++))
+		{
+			ft_putstr("error\n");
+			exit(0);
+		}
+		g_size += 1;
+		if (!oldstr[20])
 			break ;
+		oldstr += 21;
 	}
-	dest[i] = NULL; //adding a null string at the end of the 2d array
-	*size = i;
+	dest[g_size] = NULL;
 	return (dest);
 }
 
-int		main(int ac, char **av)
-{
-	char *txt; // this will be our file.txt in argument count
-	char **pieces; // our pieces from input file
-	int size;
-	int i;
+/*
+** We open, read the file and then place read's return value
+** inside (x). (x) is then check to make sure we have a valid amount
+** of tetriminos. If the number of chars is under 20 characters,
+** then we know there isn't at least 1 full single tetrimino.
+** If (x) is over 545, then there are more than 26 tetriminos.
+** After that check, we create the string we're returning, (dest),
+** and set (x) as it's size in ft_strnew. The buffer is then fed
+** via a while loop into the (dest) string.
+** The file is then closed a last time.
+*/
 
-	i = 0;
-	if (ac == 2) // a.out file.txt
+char	*textarray(char *txt)
+{
+	int		fd;
+	char	buf;
+	char	*dest;
+	int		x;
+
+	x = 0;
+	fd = open(txt, O_RDONLY);
+	while (read(fd, &buf, 1))
+		x++;
+	if (x < 20 || x > 545)
 	{
-		txt = textarray(av[1]); // reads into file and stores whole string into txt
-		if (!checkchars(txt, 0, 0, 0))
-			ERROR;
-		pieces = ft_separate(txt, &size); // then seperate every 21 pieces into different index's
-		piece_check(pieces);
-		while (size * size < size * 4)
-			size++;
-		// solving function starts here, we pass the board and pieces as parameters
-		
-		
-		
-		while (pieces[i])
-		{
-			printf("%d.\n%s", i + 1, pieces[i]);
-			i++;
-		}
+		ft_putstr("error\n");
+		exit(0);
 	}
-	else
-	{
-		(void)av;
-		USAGE;
-	}
-	return (0);
+	dest = ft_strnew(x);
+	close(fd);
+	x = 0;
+	fd = open(txt, O_RDONLY);
+	while (read(fd, &buf, 1))
+		dest[x++] = buf;
+	close(fd);
+	return (dest);
 }
 
-			// printf("Here's a piece:\n%s", pieces[0]);
-			// printf("%d.\n%s", i + 1, pieces[i]);
-			// size = piece_length(pieces[i]);
-			// printf("\nThe length of the piece is %d.\n", size);
-			// printf("The board, in memory, is %lu characters long and looks like this:\n%s", ft_strlen(board), board);
-			// printf("%d.\n%s", i + 1, board);
+/*
+** If the number of arguments isn't 1,
+** then we display the usage message, defined by USAGE.
+** If there's at least one argument, we call textarray
+** to create a string of the file. Then we take that string
+** and send it to be separated into pieces in a 2D array
+** by ft_separate. The size while loop determines
+** the smallest possible size for the board to be created
+** using the g_size value given during ft_separate.
+** That size is used to create the empty board string.
+** We then call builder to create the board in memory
+** and solve the problem. Ft_putchar creates the required
+** new line char after the hard work's been done
+*/
+
+int		main(int ac, char **av)
+{
+	char	*txt;
+	char	**pieces;
+	char	*board;
+	int		size;
+
+	size = 0;
+	if (ac == 2)
+	{
+		txt = textarray(av[1]);
+		pieces = ft_separate(txt, 'A');
+		while (size * size < g_size * 4)
+			size++;
+		board = ft_strnew(size * (size + 1));
+		builder(board, pieces, size);
+		ft_putchar('\n');
+	}
+	else
+		USAGE;
+	return (0);
+}

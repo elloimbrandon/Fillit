@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirivera <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: brfeltz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/01 13:40:44 by mirivera          #+#    #+#             */
-/*   Updated: 2019/03/03 19:54:30 by mirivera         ###   ########.fr       */
+/*   Created: 2019/02/28 12:23:28 by brfeltz           #+#    #+#             */
+/*   Updated: 2019/03/06 14:01:01 by brfeltz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-/*
-** ft_place_words cycles through the given strings characters
-** avoiding the delimiting character and returning the word
-** that will populater our new string in ft_strtrim
-*/
 
 static char		*ft_place_words(char const *s, char c, int *index)
 {
@@ -41,15 +35,6 @@ static char		*ft_place_words(char const *s, char c, int *index)
 	word[i] = '\0';
 	return (word);
 }
-
-/*
-** ft_strsplit is going to return a 2D array with strings
-** without their given delimiter character.
-** First, we check for a given string and delimiter.
-** Then, we check for letters that are not the delimiters
-** Then we build the 2D array using those words
-** and ft_place_words
-*/
 
 char			**ft_strsplit(char const *s, char c)
 {
